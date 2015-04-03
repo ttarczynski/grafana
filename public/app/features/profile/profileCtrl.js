@@ -1,11 +1,19 @@
 define([
   'angular',
+  'app',
   'config',
+  'masonry',
+  'masonry-angular',
 ],
-function (angular, config) {
+function (angular, app, config, Masonry) {
   'use strict';
 
-  var module = angular.module('grafana.controllers');
+  var module = angular.module('grafana.controllers.profile', ['wu.masonry']);
+  app.useModule(module);
+
+  require(['jquery','jquery-bridget/jquery.bridget'], function($) {
+    $.bridget('masonry', Masonry);
+  });
 
   module.controller('ProfileCtrl', function($scope, backendSrv, contextSrv, $location) {
 
@@ -13,6 +21,14 @@ function (angular, config) {
       $scope.getUser();
       $scope.getUserOrgs();
     };
+
+    $scope.bricks = [
+     {src: 'http://lorempixel.com/g/280/143/?5098'},
+     {src: 'http://lorempixel.com/g/280/371/?7544'},
+     {src: 'http://lorempixel.com/g/280/537/?6995'},
+     {src: 'http://lorempixel.com/g/280/143/?5098'},
+     {src: 'http://lorempixel.com/g/280/371/?7544'},
+    ];
 
     $scope.getUser = function() {
       backendSrv.get('/api/user').then(function(user) {

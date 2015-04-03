@@ -19,13 +19,17 @@ function (angular, $, _, appLevelRequire) {
 
   "use strict";
 
-  var app = angular.module('grafana', []),
-    // we will keep a reference to each module defined before boot, so that we can
-    // go back and allow it to define new features later. Once we boot, this will be false
-    pre_boot_modules = [],
-    // these are the functions that we need to call to register different
-    // features if we define them after boot time
-    register_fns = {};
+  var app = angular.module('grafana', []);
+  var pre_boot_modules = [];
+  var register_fns = {};
+  var apps_deps = [
+    'ngRoute',
+    'ngSanitize',
+    '$strap.directives',
+    'ang-drag-drop',
+    'grafana',
+    'pasvaz.bindonce'
+  ];
 
   // This stores the grafana version number
   app.constant('grafanaVersion',"@grafanaVersion@");
@@ -43,6 +47,7 @@ function (angular, $, _, appLevelRequire) {
   app.useModule = function (module) {
     if (pre_boot_modules) {
       pre_boot_modules.push(module);
+      apps_deps.push(module.name);
     } else {
       _.extend(module, register_fns);
     }
@@ -58,14 +63,7 @@ function (angular, $, _, appLevelRequire) {
     register_fns.filter     = $filterProvider.register;
   });
 
-  var apps_deps = [
-    'ngRoute',
-    'ngSanitize',
-    '$strap.directives',
-    'ang-drag-drop',
-    'grafana',
-    'pasvaz.bindonce'
-  ];
+
 
   var module_types = ['controllers', 'directives', 'factories', 'services', 'filters', 'routes'];
 
@@ -73,8 +71,6 @@ function (angular, $, _, appLevelRequire) {
     var module_name = 'grafana.'+type;
     // create the module
     app.useModule(angular.module(module_name, []));
-    // push it into the apps dependencies
-    apps_deps.push(module_name);
   });
 
   var preBootRequires = [

@@ -46,8 +46,14 @@ require.config({
     modernizr:                '../vendor/modernizr-2.6.1',
 
     'bootstrap-tagsinput':    '../vendor/tagsinput/bootstrap-tagsinput',
+    'masonry':                '../vendor/masonry/masonry.pkgd',
+    'masonry-angular':        '../vendor/masonry/angular-masonry',
   },
   shim: {
+
+    masonry: {
+      deps: ['jquery'],
+    },
 
     spectrum: {
       deps: ['jquery']

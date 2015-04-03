@@ -81,6 +81,13 @@
 			</tr>
 		</table>
 
+		<h2>Masonry</h2>
+		<div masonry load-images="false" column-width="200">
+			<div class="masonry-brick" ng-repeat="brick in bricks">
+				<img ng-src="{{ brick.src }}" alt="A masonry brick">
+			</div>
+		</div>
+
 	</div>
 </div>
 

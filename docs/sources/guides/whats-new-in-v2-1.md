@@ -12,9 +12,10 @@ As with every Grafana release, there is a whole slew of new features, enhancemen
 
 [Download Grafana 2.1 now](http://grafana.org/download), or dive in to see what's new below. 
 
-- - -
 
-We're excited about this release, and want to share some of the highlights:    
+We're excited about this release, and want to share some of the highlights:       
+
+- - -
 
 ##More Dynamic Dashboards
 The Templating system is one of the most powerful and well-used features of Grafana. The 2.1 release brings numerous improvements that make Dashboards more dynamic than ever before.

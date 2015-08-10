@@ -13,8 +13,9 @@ import (
 )
 
 type ldapAuther struct {
-	server *LdapServerConf
-	conn   *ldap.Conn
+	server            *LdapServerConf
+	conn              *ldap.Conn
+	requireSecondBind bool
 }
 
 func NewLdapAuthenticator(server *LdapServerConf) *ldapAuther {
@@ -56,8 +57,7 @@ func (a *ldapAuther) login(query *LoginUserQuery) error {
 			log.Info("Ldap User Info: %s", spew.Sdump(ldapUser))
 		}
 
-		// check if a second user bind is needed
-		// if a.server.BindPassword != "" {
+		// if a.requireSecondBind {
 		// 	if err := a.secondBind(ldapUser, query.Password); err != nil {
 		// 		return err
 		// 	}
@@ -203,8 +203,9 @@ func (a *ldapAuther) secondBind(ldapUser *ldapUserInfo, userPassword string) err
 }
 
 func (a *ldapAuther) initialBind(username, userPassword string) error {
-	if a.server.BindPassword != "" {
+	if a.server.BindPassword != "" || a.server.BindDN == "" {
 		userPassword = a.server.BindPassword
+		a.requireSecondBind = true
 	}
 
 	bindPath := a.server.BindDN

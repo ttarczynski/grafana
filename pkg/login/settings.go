@@ -16,7 +16,7 @@ type LdapConfig struct {
 
 type LdapServerConf struct {
 	Host          string           `toml:"host"`
-	Port          int              `toml:"port"`
+	Port          string           `toml:"port"`
 	UseSSL        bool             `toml:"use_ssl"`
 	SkipVerifySSL bool             `toml:"ssl_skip_verify"`
 	BindDN        string           `toml:"bind_dn"`

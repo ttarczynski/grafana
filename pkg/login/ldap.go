@@ -24,7 +24,7 @@ func NewLdapAuthenticator(server *LdapServerConf) *ldapAuther {
 }
 
 func (a *ldapAuther) Dial() error {
-	address := fmt.Sprintf("%s:%d", a.server.Host, a.server.Port)
+	address := fmt.Sprintf("%s:%s", a.server.Host, a.server.Port)
 	var err error
 	if a.server.UseSSL {
 		tlsCfg := &tls.Config{
